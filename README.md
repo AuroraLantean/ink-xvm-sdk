@@ -10,6 +10,16 @@ https://github.com/realtakahashi/ink-xvm-sdk
 https://github.com/AstarNetwork/ink-xvm-sdk
 
 ## Steps
+Download an Astar Network node(a Substrate node with both EVM and Ink contract pallet) from https://github.com/AstarNetwork/Astar/releases
+Then run it: `./astar-collator  --dev --tmp`
+
+https://docs.astar.network/docs/build/environment/local-network/
+Configure Metamask to use:
+Name: Astar
+URL: http://127.0.0.1:9944
+ChainID: 4369 Astar
+Currency Symbol: ASTL
+
 Deploy my EVM Solidity contract via Remix connecting to my local node: ./solidity/Storage.sol
 
 Inside a non rust toolchain repo:
