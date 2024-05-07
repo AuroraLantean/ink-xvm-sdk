@@ -40,6 +40,7 @@ pub mod store_xvm {
             Self { evm_address }
         }
 
+        //https://docs.astar.network/docs/learn/interoperability/xvm/#interfaces
         #[ink(message)]
         pub fn store(&mut self, value: u128) -> bool {
             let encoded_input = Self::store_encode( value.into());
@@ -49,7 +50,7 @@ pub mod store_xvm {
                     super::EVM_ID,
                     Vec::from(self.evm_address.as_ref()),
                     encoded_input,
-                    value
+                    0
                 )
                 .is_ok()
         }
