@@ -4,7 +4,36 @@ This repository contains examples contracts using XVM to call EVM from ink! need
 It contains an implementation of XVM chain-extension to use in your contracts.
 As well as ink! contracts SDK that implements XVM chain-extension to be used as is.
 
+## Reference: 
+This repo code is copied initially from the repos below
+https://github.com/realtakahashi/ink-xvm-sdk
+https://github.com/AstarNetwork/ink-xvm-sdk
+
+## Steps
+Deploy my EVM Solidity contract via Remix connecting to my local node: ./solidity/Storage.sol
+
+Inside a non rust toolchain repo:
+`cargo install --version 3.2.0 cargo-contract`
+`cargo contract --version`
+... cargo contract version is 3.2.0, good for my Wasm Ink! 4.3.0 version
+
+Compile wrapper wasm contract:
+`cargo contract build --manifest-path ink/contracts/store_xvm/Cargo.toml`
+... should succeed with the following:
+  - store_xvm.contract (code + metadata)
+  - store_xvm.wasm (the contract's code)
+  - store_xvm.json (the contract's metadata)
+
+Use https://ui.use.ink/ to deploy the compiled wasm with an already deployed Solidity contract address
+
+
 ## Contracts SDK
+XVMv2 can only process transactions that returns `()` hence query values is not supported yet. These contracts only implement functions that modify state.
+Transactions pass multiple layers of XVM abstractions in one line. All cross-VM communication looks like it all going inside the smart contract.
+
+#### ERC20
+
+This implementation is a controller of an underlying `ERC20` on EVM. Interact with `H160` addresses
 
 #### PSP22 Wrapper
 
