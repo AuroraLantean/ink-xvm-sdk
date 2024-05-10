@@ -10,7 +10,8 @@ https://github.com/realtakahashi/ink-xvm-sdk
 https://github.com/AstarNetwork/ink-xvm-sdk
 
 ## Steps
-Download an Astar Network node(a Substrate node with both EVM and Ink contract pallet) from https://github.com/AstarNetwork/Astar/releases
+#### 1. Download a Substrate node with both EVM and Ink contract pallet
+e.g. Astar https://github.com/AstarNetwork/Astar/releases
 Then run it: `./astar-collator  --dev --tmp`
 
 https://docs.astar.network/docs/build/environment/local-network/
@@ -20,78 +21,33 @@ URL: http://127.0.0.1:9944
 ChainID: 4369 Astar
 Currency Symbol: ASTL
 
-Deploy my EVM Solidity contract via Remix connecting to my local node: ./solidity/Storage.sol
+#### 2. Deploy the Storage EVM Solidity contract via Remix connecting to the local node from step1: 
+The Storage contract is located at `./solidity/Storage.sol`
 
-Inside a non rust toolchain repo:
+#### Install `Cargo contract` inside a repo without rust toolchain:
 `cargo install --version 3.2.0 cargo-contract`
 `cargo contract --version`
 ... cargo contract version is 3.2.0, good for my Wasm Ink! 4.3.0 version
 
-Compile wrapper wasm contract:
-`cargo contract build --manifest-path ink/contracts/store_xvm/Cargo.toml`
-... should succeed with the following:
+#### Compile wrapper wasm contract:
+`cargo contract build --manifest-path PATH_TO_XVM_FOLDER/Cargo.toml`
+... this should succeed with the following:
   - store_xvm.contract (code + metadata)
   - store_xvm.wasm (the contract's code)
   - store_xvm.json (the contract's metadata)
 
-Use https://ui.use.ink/ to deploy the compiled wasm with an already deployed Solidity contract address
+#### Use https://ui.use.ink/ to deploy the compiled wasm with the already deployed Solidity contract address from above
+
+Then I got `Contract Reverted! DispatchError: DecodingFailed Input passed to a contract API function failed to decode as expected type...`
 
 
-## Contracts SDK
-XVMv2 can only process transactions that returns `()` hence query values is not supported yet. These contracts only implement functions that modify state.
-Transactions pass multiple layers of XVM abstractions in one line. All cross-VM communication looks like it all going inside the smart contract.
+#### Reference: 
+https://substrate.stackexchange.com/questions/11435/xvm-ink-wasm-to-evm-contract-reverted-decoding-failed
 
-#### ERC20
+https://medium.com/astar-network/cross-virtual-machine-creating-a-portal-to-the-future-of-smart-contracts-a96c6d2f79b8
 
-This implementation is a controller of an underlying `ERC20` on EVM. Interact with `H160` addresses
+https://theastarbulletin.news/how-to-implement-a-contract-using-xvm-1c94d2072c30
 
-#### PSP22 Wrapper
+https://docs.astar.network/docs/learn/interoperability/xvm/#interfaces
 
-This implementation is a wrapper of an underlying `ERC20` on EVM. Interact with native substrate addresses.
-As it implements wrapper pattern it has `deposit` & `withdraw` function and can be used as a bridgeless solution between WASM VM & EVM.
-It implements `PSP22` standard, thus can be used in any DEX/wallet supporting it.
-Please have a look at the tests that describe the flow to use `deposit` and `withdraw`.
-
-#### PSP34 Wrapper
-
-This implementation is a wrapper of an underlying `ERC721` on EVM. Interact with substrate native substrate addresses.
-As it implements wrapper pattern it has `deposit` & `withdraw` function and can be used as a bridgeless solution between WASM VM & EVM.
-It implements `PSP34` standard, and thus can be used in any DEX/wallet supporting it.
-
-## Library
-
-#### XVM environment
-
-Implementation of XVM chain extension added to a custom `XvmDefaultEnvironment`.
-
-1. Import the crate in your Cargo.toml
-2. Add it to your contract in ink! macro `#[ink::contract(env = xvm_sdk::XvmDefaultEnvironment)]`.
-3. In your contract use it with `self.env().extension().xvm_call(..args)`.
-
-#### XVM Builder
-
-This crate exposes `Xvm` struct that implements xvm_call with chain-extension builder from ink_env.
-It makes it compatible with other custom environment like openbrush.
-Have a look at PSP22 Wrapper for an example.
-
-1. Import the crate in your Cargo.toml
-2. Import struct in your contract use `use xvm_helper::*;`
-3. Use it with `XvmErc20::transfer(..args)`
-
-## Usage
-
-##### Try it!
-
-1. Clone the repo
-2. Run `yarn`
-3. Build ink! contracts `yarn build:ink`
-
-**To run on local node:**
-Ensure you have a local node running with `./target/release/astar-collator --dev -lruntime::contracts=debug -l=runtime=debug,xvm=trace --enable-evm-rpcp` (to have XVM and ink! logs).     
-Then run `yarn test`.
-
-**To run on Shibuya:**
-Create a .env file from .env.example and fill it with your credentials:
-Add your Shibuya EVM private key in `ACCOUNT_PRIVATE_KEY_EVM`
-And your Shibuya Substrate passphrase in `SUBSTRATE_MNEMO`.
-Then run `yarn test:shibuya`.
+Code are copied from https://github.com/realtakahashi/ink-xvm-sdk and https://github.com/AstarNetwork/ink-xvm-sdk
