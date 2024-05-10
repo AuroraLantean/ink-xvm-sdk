@@ -26,10 +26,10 @@ Currency Symbol: ASTL
 The Storage contract is located at `./solidity/Storage.sol`
 
 #### Install `Cargo contract` inside a repo without rust toolchain:
-`cargo install --version 3.2.0 cargo-contract`
+`cargo install --force --locked cargo-contract`
 
 `cargo contract --version`
-... cargo contract version is 3.2.0, good for my Wasm Ink! 4.3.0 version
+... cargo contract version is 4.1.1 works for my Wasm Ink! 4.3.0 version
 
 #### Compile wrapper wasm contract:
 `cargo contract build --manifest-path PATH_TO_XVM_FOLDER/Cargo.toml`
@@ -40,8 +40,9 @@ The Storage contract is located at `./solidity/Storage.sol`
 
 #### Use https://ui.use.ink/ to deploy the compiled wasm with the already deployed Solidity contract address from above
 
-Then I got `Contract Reverted! DispatchError: DecodingFailed Input passed to a contract API function failed to decode as expected type...`
+Although it says Contract Reverted. Decoding Failed, that is OKAY!
 
+Go to https://polkadot.js.org/apps/#/contracts and follow the tutorial link posted above
 
 #### Reference: 
 https://substrate.stackexchange.com/questions/11435/xvm-ink-wasm-to-evm-contract-reverted-decoding-failed
