@@ -10,22 +10,24 @@ https://github.com/realtakahashi/ink-xvm-sdk
 https://github.com/AstarNetwork/ink-xvm-sdk
 
 ## Steps
-#### 1. Download a Substrate node with both EVM and Ink contract pallet
+#### Download a Substrate node with both EVM and Ink contract pallet
 e.g. Astar https://github.com/AstarNetwork/Astar/releases
+
 Then run it: `./astar-collator  --dev --tmp`
 
 https://docs.astar.network/docs/build/environment/local-network/
 Configure Metamask to use:
-Name: Astar
-URL: http://127.0.0.1:9944
-ChainID: 4369 Astar
+Name: Astar,
+URL: http://127.0.0.1:9944 ,
+ChainID: 4369 Astar ,
 Currency Symbol: ASTL
 
-#### 2. Deploy the Storage EVM Solidity contract via Remix connecting to the local node from step1: 
+#### Deploy the Storage EVM Solidity contract via Remix connecting to the local node from step1: 
 The Storage contract is located at `./solidity/Storage.sol`
 
 #### Install `Cargo contract` inside a repo without rust toolchain:
 `cargo install --version 3.2.0 cargo-contract`
+
 `cargo contract --version`
 ... cargo contract version is 3.2.0, good for my Wasm Ink! 4.3.0 version
 
